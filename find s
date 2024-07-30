@@ -1,0 +1,26 @@
+# Read CSV file
+data = pd.read_csv(R"C:\Users\Ankita Bhattacharjee\Downloads\Find_S.csv")
+
+# Initialize the hypothesis
+def find_s(data):
+    hypothesis = ['0'] * (len(data.columns) - 1)
+    for i in range(len(data)):
+        if data.iloc[i, -1] == 'Yes':
+            for j in range(len(hypothesis)):
+                if hypothesis[j] == '0' or hypothesis[j] == data.iloc[i, j]:
+                    hypothesis[j] = data.iloc[i, j]
+                else:
+                    hypothesis[j] = '?'
+    return hypothesis
+
+# Find the most specific hypothesis
+hypothesis = find_s(data)
+print("Most specific hypothesis:", hypothesis)
+
+# Visualize the data
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+sns.countplot(x=' PlayGolf', data=data)
+plt.title('Distribution of  PlayGolf')
+plt.show()

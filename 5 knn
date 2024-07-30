@@ -1,0 +1,31 @@
+#5K-Nearest Neighbors (K-NN)
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
+import matplotlib.pyplot as plt
+
+# Read CSV file
+data = pd.read_csv(r"C:\Users\Ankita Bhattacharjee\Downloads\diabetes (1).csv")
+
+# Prepare data
+X = data.drop(columns=['Outcome'])
+y = data['Outcome']
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
+
+# Train model
+model = KNeighborsClassifier(n_neighbors=3)
+model.fit(X_train, y_train)
+
+# Predictions and evaluation
+y_pred = model.predict(X_test)
+print(classification_report(y_test, y_pred))
+
+# Plot data points
+plt.scatter(data['Glucose'], data['BMI'], c=data['Outcome'])
+plt.title('Glucose vs BMI')
+plt.xlabel('Glucose')
+plt.ylabel('BMI2')
+plt.show()

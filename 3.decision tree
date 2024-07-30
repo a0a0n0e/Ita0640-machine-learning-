@@ -1,0 +1,29 @@
+#3 DECISION TREE (ID3 ALGORITHM)
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier, export_text, plot_tree
+from sklearn.model_selection import train_test_split
+import matplotlib.pyplot as plt
+
+# Read CSV file
+data = pd.read_csv(r"C:\Users\Ankita Bhattacharjee\DECISIONTREEID3.CSV")
+
+# Prepare data
+X = data.drop(columns=['PlayTennis'])
+y = data['PlayTennis']
+X = pd.get_dummies(X)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
+
+# Train model
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+
+# Display tree
+tree_rules = export_text(model, feature_names=list(X.columns))
+print(tree_rules)
+
+# Plot the tree
+plt.figure(figsize=(20,10))
+plot_tree(model, feature_names=X.columns, class_names=model.classes_, filled=True)
+plt.show()
